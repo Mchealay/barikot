@@ -107,14 +107,20 @@ window.onload = function () {
     const surpriseBtn = document.getElementById('surpriseBtn');
     const closeBtn = document.getElementById('closeBtn');
 
-    surpriseBtn.addEventListener('click', function () {
-        showBirthdayMessage();
-    });
-
-    surpriseBtn.addEventListener('touchend', function (e) {
+    // Modified event listeners for better mobile support
+    surpriseBtn.addEventListener('click', function (e) {
         e.preventDefault();
         showBirthdayMessage();
     });
+
+    // Add touchstart event listener
+    surpriseBtn.addEventListener('touchstart', function (e) {
+        e.preventDefault();
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
+        }
+        showBirthdayMessage();
+    }, { passive: false });
 
     closeBtn.addEventListener('click', function () {
         document.getElementById('birthdayMessage').style.display = 'none';
@@ -122,24 +128,12 @@ window.onload = function () {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    closeBtn.addEventListener('touchend', function (e) {
+    closeBtn.addEventListener('touchstart', function (e) {
         e.preventDefault();
         document.getElementById('birthdayMessage').style.display = 'none';
         // Scroll back to the top where the surprise button is
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    document.addEventListener('touchstart', function (e) {
-        if (e.target === document.body) {
-            e.preventDefault();
-        }
     }, { passive: false });
-
-    surpriseBtn.addEventListener('touchstart', function () {
-        if (navigator.vibrate) {
-            navigator.vibrate(50);
-        }
-    });
 
     // Download functionality
     const downloadButtons = document.querySelectorAll('.download-btn');
