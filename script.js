@@ -100,9 +100,102 @@ function createConfetti() {
     }
 }
 
+// Add full-screen viewer functionality
+const fullscreenViewer = document.getElementById('fullscreenViewer');
+const fullscreenImage = document.getElementById('fullscreenImage');
+const fullscreenDownload = document.getElementById('fullscreenDownload');
+const fullscreenClose = document.getElementById('fullscreenClose');
+
+// Function to open full-screen viewer
+function openFullscreen(imageSrc) {
+    fullscreenImage.src = imageSrc;
+    fullscreenDownload.href = imageSrc;
+    fullscreenViewer.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
+}
+
+// Function to close full-screen viewer
+function closeFullscreen() {
+    fullscreenViewer.style.display = 'none';
+    document.body.style.overflow = ''; // Restore scrolling
+}
+
+// Add click event listeners to all photo containers
+document.querySelectorAll('.photo-container').forEach(container => {
+    container.addEventListener('click', (e) => {
+        // Don't open fullscreen if clicking the download button
+        if (!e.target.closest('.download-btn')) {
+            const img = container.querySelector('img');
+            if (img) {
+                openFullscreen(img.src);
+            }
+        }
+    });
+});
+
+// Close fullscreen when clicking the close button
+fullscreenClose.addEventListener('click', closeFullscreen);
+
+// Close fullscreen when clicking outside the image
+fullscreenViewer.addEventListener('click', (e) => {
+    if (e.target === fullscreenViewer) {
+        closeFullscreen();
+    }
+});
+
+// Close fullscreen when pressing Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && fullscreenViewer.style.display === 'flex') {
+        closeFullscreen();
+    }
+});
+
+// Create golden balloons
+function createGoldenBalloons() {
+    const balloonCount = 5;
+    
+    for (let i = 0; i < balloonCount; i++) {
+        const balloon = document.createElement('div');
+        balloon.className = 'golden-balloon';
+        
+        // Random starting position
+        balloon.style.left = Math.random() * 100 + 'vw';
+        balloon.style.top = Math.random() * 100 + 'vh';
+        
+        // Random animation duration and delay
+        balloon.style.animationDuration = (Math.random() * 10 + 15) + 's';
+        balloon.style.animationDelay = (Math.random() * 10) + 's';
+        
+        // Add sparkles
+        for (let j = 0; j < 3; j++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            sparkle.style.animationDelay = (Math.random() * 1.5) + 's';
+            balloon.appendChild(sparkle);
+        }
+        
+        document.body.appendChild(balloon);
+        
+        // Remove balloon after animation completes
+        setTimeout(() => {
+            balloon.remove();
+        }, 25000);
+    }
+}
+
+// Initialize golden balloons
+function initGoldenBalloons() {
+    createGoldenBalloons();
+    // Create new balloons every 20 seconds
+    setInterval(createGoldenBalloons, 20000);
+}
+
 // Initialize
 window.onload = function () {
     createBalloons();
+    initGoldenBalloons();
 
     const surpriseBtn = document.getElementById('surpriseBtn');
     const closeBtn = document.getElementById('closeBtn');
