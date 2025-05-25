@@ -118,11 +118,15 @@ window.onload = function () {
 
     closeBtn.addEventListener('click', function () {
         document.getElementById('birthdayMessage').style.display = 'none';
+        // Scroll back to the top where the surprise button is
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     closeBtn.addEventListener('touchend', function (e) {
         e.preventDefault();
         document.getElementById('birthdayMessage').style.display = 'none';
+        // Scroll back to the top where the surprise button is
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     document.addEventListener('touchstart', function (e) {
