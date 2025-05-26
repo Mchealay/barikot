@@ -83,12 +83,13 @@ h1 {
     position: absolute;
     width: 50px;
     height: 70px;
-    background: linear-gradient(45deg, #2d5a27 0%, #3c7a3c 100%);
+    background: linear-gradient(45deg, #ffd700 0%, #ffec8b 100%);
     border-radius: 50%;
     animation: float 15s infinite ease-in;
     touch-action: manipulation;
-    box-shadow: 0 5px 15px rgba(45, 90, 39, 0.4);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
     transition: transform 0.3s ease;
+    z-index: 0;
 }
 
 .balloon:hover {
@@ -104,6 +105,18 @@ h1 {
     bottom: -8px;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.balloon:after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.6);
+    bottom: -38px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
 }
 
 @keyframes float {
@@ -219,31 +232,106 @@ h1 {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.95);
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #FF6B6B, #4ECDC4, #45B7D1);
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
     z-index: 100;
     display: none;
     width: 90%;
-    max-width: 350px;
+    max-width: 400px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    animation: messagePop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), gradientBG 15s ease infinite;
+    background-size: 200% 200%;
+}
+
+@keyframes messagePop {
+    0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+    }
+
+    70% {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.message h2 {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    animation: bounce 2s infinite;
+}
+
+.message h2 span {
+    font-size: 2.5rem;
+    display: inline-block;
+    animation: cakeBounce 2s infinite;
+    margin: 0 5px;
+}
+
+@keyframes cakeBounce {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(10deg);
+    }
+}
+
+.message p {
+    color: white;
+    font-size: 1.2rem;
+    margin: 15px 0;
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .close-btn {
     position: absolute;
-    top: 10px;
-    right: 15px;
+    top: 15px;
+    right: 20px;
     cursor: pointer;
-    font-size: 1.5rem;
-    color: #ff6b6b;
-    transition: transform 0.3s;
+    font-size: 2rem;
+    color: white;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .close-btn:hover {
     transform: rotate(90deg);
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .confetti {
@@ -269,18 +357,26 @@ h1 {
 }
 
 .baby-image {
-    width: 100px;
-    height: 100px;
+    width: 180px;
+    height: 180px;
     object-fit: cover;
-    margin: 15px 0;
+    margin: 20px auto;
     border-radius: 50%;
-    border: 4px solid #f9c5d1;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s;
+    border: 4px solid white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: float 3s ease-in-out infinite;
 }
 
-.baby-image:hover {
-    transform: scale(1.05);
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 .timeline {
@@ -379,6 +475,30 @@ h1 {
     transition: all 0.3s ease;
     font-family: 'Noto Sans Ethiopic', 'Poppins', sans-serif;
     line-height: 1.8;
+}
+
+.description-text details {
+    margin-top: 10px;
+}
+
+.description-text summary {
+    background: #2e9c59;
+    color: #e1ebe4;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.description-text summary:hover {
+    background: #ffec8b;
+    transform: translateY(-2px);
+}
+
+.description-text details[open] summary {
+    border-radius: 20px 20px 0 0;
 }
 
 .short-text {
